@@ -33,16 +33,28 @@ server.post("/tasks", async (request, response) => {
 });
 
 // Atualizar o titulo de uma tarefa:    PUT: http://localhost:3001/tasks/:id
-server.put("/tasks/:id", async (request , response) => {
-    const newUpdate = request.title;
-    const taskUpdate = await db.update(newUpdate)
+server.put("/tasks/:id", async (request, response) => {
+    const title = request.params.id;
+    const titleUpdate = await db.update(title);
 
-    response.status(200).json(taskUpdate);
+    response.status(200).json(titleUpdate);
 })
 
 // Mudar o valor de completed:          PUT: http://localhost:3001/tasks/:id/completed
+server.put("/tasks/:id", async (request, response) => {
+    const completed = request.params.id;
+    const taskCompleted = await db(completed)
+
+    response.status(200).json(taskCompleted)
+})
 
 
 // Excluir uma tarefa:                  Delete: http://localhost:3001/tasks/:id
+server.delete("/tasks/:id", async (request, response) => {
+    const delTask = request.params.id;
+    const deleteTask = await db.del(delTask);
+
+    response.status(200).json(deleteTask)
+})
 
 server.listen("3001", () => console.log("Servidor está rodando!"));
